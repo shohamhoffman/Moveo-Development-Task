@@ -1,0 +1,39 @@
+<div class="row d-flex justify-content-center align-items-center">
+  <h3 class="d-flex col-12 justify-content-center">
+    <b>Create an appointment for - {{doctor.name}}</b>
+  </h3>
+  <div class="row d-flex col-6 justify-content-center">
+    <ng2-flatpickr
+      placeholder="Select a date"
+      [config]="dateOptions"
+    ></ng2-flatpickr>
+    <span
+      class="col-12 mt-4 text-center"
+      *ngIf="appointmentStart && isValidDate"
+    >
+      Create an appointment at <br />
+      <b
+        >{{ appointmentStart | date: "dd-MM-yyyy HH:mm" }}
+        -
+        {{ appointmentEnd | date: "dd-MM-yyyy HH:mm" }} ?</b
+      >
+    </span>
+    <span
+      class="text-danger col-12 text-center mt-3"
+      *ngIf="appointmentStart && !isValidDate"
+    >
+      Please choose a valid date.
+    </span>
+    <mat-dialog-actions class="col-12 justify-content-center mt-2">
+      <button class="btn btn-danger" mat-button mat-dialog-close>Cancel</button>
+      <button
+        [disabled]="!isValidDate"
+        class="btn btn-success"
+        mat-button
+        [mat-dialog-close]="appointmentStart"
+      >
+        Create Appointment
+      </button>
+    </mat-dialog-actions>
+  </div>
+</div>

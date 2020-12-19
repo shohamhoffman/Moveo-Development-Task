@@ -1,0 +1,14 @@
+[
+  {
+    "Id": "1",
+    "Name": "Liam",
+    "Email": "liam@fake.com",
+    "DoctorField": "Cardiologist"
+  },
+  {
+    "Id": "2",
+    "Name": "Olivia",
+    "Email": "olivia@fake.com",
+    "DoctorField": "Ophthalmologist"
+  }
+]

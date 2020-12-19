@@ -1,0 +1,47 @@
+<div class="row d-flex justify-content-center align-items-center">
+  <ng-container *ngIf="appointments.length == 0">
+    <h3
+      class="d-flex col-12 justify-content-center"
+      *ngIf="allAppointments; else patientAppointmentsEmplty"
+    >
+      {{ doctor.name }} waiting list is empty.
+    </h3>
+    <ng-template #patientAppointmentsEmplty>
+      <h3 class="d-flex col-12 justify-content-center">
+        You have no future appointments for - {{ doctor.name }}.
+      </h3>
+    </ng-template>
+  </ng-container>
+  <ng-container *ngIf="appointments.length > 0">
+    <h3
+      class="d-flex col-12 justify-content-center"
+      *ngIf="allAppointments; else patientAppointments"
+      mat-dialog-title
+    >
+      {{ doctor.name }} waiting list
+    </h3>
+    <ng-template #patientAppointments>
+      <h3 class="d-flex col-12 justify-content-center" mat-dialog-title>
+        Your future appointments for - {{ doctor.name }}
+      </h3>
+    </ng-template>
+    <ul class="list-group list-unstyled mx-2">
+      <li class="list-group-item" *ngFor="let appointment of appointments">
+        <span class="mx-4"
+          >Appointment time:
+          {{ appointment.startTime | date: "dd-MM-yyyy HH:mm" }} -
+          {{ appointment.endTime | date: "HH:mm" }}
+        </span>
+        <button
+          mat-raised-button
+          *ngIf="!allAppointments"
+          [mat-dialog-close]="true"
+          (click)="deleteAppointment(appointment.id)"
+          [disabled]="appointment.isStarted"
+        >
+          Cancel appointment
+        </button>
+      </li>
+    </ul>
+  </ng-container>
+</div>

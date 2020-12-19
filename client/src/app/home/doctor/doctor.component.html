@@ -1,0 +1,60 @@
+<div class="row d-flex justify-content-center align-items-center m-4">
+  <div class="row align-items-center justify-content-center">
+    <h3 class="m-0">
+      Welcome <b>{{ (currentUser$ | async).displayName }} !</b>
+    </h3>
+    <div class="ml-3">
+      <button class="btn btn-danger" mat-raised-button (click)="logout()">
+        Logout
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  class="container mt-5"
+  *ngIf="appointments.length > 0; else noAppointments"
+>
+  <h3 class="text-center"><b>Your waiting list:</b></h3>
+  <div class="row">
+    <div class="col-12">
+      <table class="d-flex row table table-hover justify-content-center">
+        <thead class="d-flex thead-light col-12 justify-content-center">
+          <tr class="row w-100 text-center">
+            <th class="col-4">Patient Name</th>
+            <th class="col-4">Start Time</th>
+            <th class="col-4">End Time</th>
+          </tr>
+        </thead>
+        <tbody class="row d-flex col-12 justify-content-center mb-1">
+          <tr
+            class="row w-100 text-center align-items-center"
+            *ngFor="let appointment of appointments"
+          >
+            <th class="col-4">{{ appointment.patientName }}</th>
+            <td class="col-4">
+              <span class="justify-content-center">
+                {{
+                  appointment.startTime | date: "dd-MM-yyyy HH:mm"
+                }}
+                &nbsp;&nbsp;&nbsp;
+              </span>
+            </td>
+            <td class="col-4">
+              <span class="justify-content-center">
+                {{
+                  appointment.endTime | date: "dd-MM-yyyy HH:mm"
+                }}
+                &nbsp;&nbsp;&nbsp;
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #noAppointments>
+  <h2 class="text-center"><b>Your waiting list is empty.</b></h2>
+</ng-template>

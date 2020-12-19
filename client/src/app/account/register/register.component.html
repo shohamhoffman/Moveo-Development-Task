@@ -1,0 +1,181 @@
+<div class="d-flex justify-content-center mt-5 h-100">
+  <div class="col-3 justify-content-center">
+    <div class="text-center mb-4">
+      <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div *ngIf="!type; else register" class="d-flex justify-content-center">
+        <div class="center">
+          <h3 class="text-center"><b>I am</b></h3>
+          <div class="form-check form-check-inline">
+            <input
+              formControlName="userType"
+              class="form-check-input"
+              type="radio"
+              id="inputUserTypePat"
+              value="patient"
+              (change)="showForm($event)"
+            />
+            <label class="form-check-label" for="inputUserType">Patient</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              formControlName="userType"
+              class="form-check-input"
+              type="radio"
+              id="inputUserTypeDoc"
+              value="doctor"
+              (change)="showForm($event)"
+            />
+            <label class="form-check-label" for="inputUserType">Doctor</label>
+          </div>
+        </div>
+      </div>
+      ​
+
+      <ng-template #register>
+        <div class="form-label-group">
+          <input
+            formControlName="displayName"
+            type="text"
+            id="inputDisplayName"
+            class="form-control"
+            placeholder="Display Name"
+          />
+          <label for="inputDisplayName">Display Name</label>
+          <span
+            class="text-danger"
+            *ngIf="
+              registerForm.get('displayName').invalid &&
+              registerForm.get('displayName').touched &&
+              registerForm.get('displayName').errors['required']
+            "
+          >
+            Display name is required
+          </span>
+        </div>
+
+        <div class="form-label-group">
+          <input
+            formControlName="email"
+            type="email"
+            id="inputEmail"
+            class="form-control"
+            placeholder="Email Address"
+          />
+          <label for="inputEmail">Email Address</label>
+          <span
+            class="text-danger"
+            *ngIf="
+              registerForm.get('email').invalid &&
+              registerForm.get('email').touched &&
+              registerForm.get('email').errors['required']
+            "
+          >
+            Email address is required
+          </span>
+          <span
+            class="text-danger"
+            *ngIf="
+              registerForm.get('email').invalid &&
+              registerForm.get('email').touched &&
+              registerForm.get('email').errors['pattern']
+            "
+          >
+            Email address is not valid
+          </span>
+          <span
+            class="text-danger"
+            *ngIf="
+              registerForm.get('email').invalid &&
+              registerForm.get('email').touched &&
+              registerForm.get('email').errors['emailExists']
+            "
+          >
+            Email address is in use
+          </span>
+        </div>
+
+        <div class="form-label-group" *ngIf="type == 'doctor'">
+          <input
+            formControlName="doctorField"
+            type="text"
+            id="inputDoctorField"
+            class="form-control"
+            placeholder="Enter your expertise"
+          />
+          <label for="inputDoctorField">Expertise</label>
+          <span
+            class="text-danger"
+            *ngIf="
+              registerForm.get('doctorField').invalid &&
+              registerForm.get('doctorField').touched &&
+              registerForm.get('doctorField').errors['required']
+            "
+          >
+            Expertise is required
+          </span>
+        </div>
+
+        <div class="form-label-group">
+          <input
+            formControlName="password"
+            type="password"
+            id="inputPassword"
+            class="form-control"
+            placeholder="Password"
+          />
+          <label for="inputPassword">Password</label>
+          <span
+            class="text-danger"
+            *ngIf="
+              registerForm.get('password').invalid &&
+              registerForm.get('password').touched &&
+              registerForm.get('password').errors['required']
+            "
+          >
+            Password is required
+          </span>
+          <span
+            class="text-danger"
+            *ngIf="
+              registerForm.get('password').invalid &&
+              registerForm.get('password').touched &&
+              registerForm.get('password').errors['pattern']
+            "
+          >
+            Password must contain at least - 8 characters, 1 number, 1
+            lowercase, 1 uppercase and 1 alphanumeric
+          </span>
+        </div>
+
+        <ul class="text-danger list-unstyled" *ngIf="errors">
+          <li *ngFor="let error of errors">
+            {{ error }}
+          </li>
+        </ul>
+
+        <button
+          [disabled]="registerForm.invalid"
+          class="btn btn-lg btn-primary btn-block"
+          type="submit"
+        >
+          Sign Up
+        </button>
+      </ng-template>
+    </form>
+    <div
+      *ngIf="type"
+      class="row mt-3 justify-content-center align-items-center"
+      style="text-align: center"
+    >
+      <span
+        >Change user type ?&nbsp; Change to
+        <u style="cursor: pointer" (click)="changeUserType()">{{
+          type == "doctor" ? "patient" : "doctor"
+        }}</u>
+      </span>
+    </div>
+  </div>
+</div>
