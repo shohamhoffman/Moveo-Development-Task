@@ -14,7 +14,7 @@ import { interval, Observable, Subscription } from 'rxjs';
   templateUrl: './patient.component.html',
   styleUrls: ['./patient.component.scss'],
 })
-export class PatientComponent implements OnInit {
+export class PatientComponent implements OnInit, OnDestroy {
   doctors: IDoctor[];
   sort = false;
   currentUser$: Observable<IUser>;
@@ -175,7 +175,7 @@ export class PatientComponent implements OnInit {
     this.accountService.logout();
   }
 
-  dispose() {
+  ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }
